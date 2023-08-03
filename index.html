@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            
+            <h1>Age Calculator</h1>
+            <label for="birthdate">Enter your birthdate:</label>
+            <input type="date" id="dob">
+            <button onclick="calculateAge()">Calculate Age</button>
+            <div id="result"><span id="years"></span><span id="months"></span><span id="days"></span></div>
+        </div>
+    </div>
+
+    <script>
+        function calculateAge() {
+            const birthdateInput = document.getElementById('dob');
+            const birthdate = new Date(birthdateInput.value);
+            const today = new Date();
+
+            let yearsDiff = today.getFullYear() - birthdate.getFullYear();
+            let monthsDiff = today.getMonth() - birthdate.getMonth();
+            let daysDiff = today.getDate() - birthdate.getDate();
+
+            if (monthsDiff < 0 || (monthsDiff === 0 && daysDiff < 0)) {
+                yearsDiff--;
+                monthsDiff += 12;
+            }
+
+            if (daysDiff < 0) {
+                const prevMonthLastDay = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+                daysDiff = prevMonthLastDay - birthdate.getDate() + today.getDate();
+                monthsDiff--;
+            }
+
+            document.getElementById('years').textContent = ` ${yearsDiff}\n Years`;
+            document.getElementById('months').textContent = ` ${monthsDiff}\n Months`;
+            document.getElementById('days').textContent = ` ${daysDiff}\n Days`;
+
+        }
+    </script>
+</body>
+</html>
